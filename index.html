@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRIGADIR - Organisasi Siswa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(244, 208, 63, 0.2);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4d03f;
+            font-weight: 800;
+            font-size: 24px;
+            border: 2px solid #f4d03f;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #f4d03f;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section with Slideshow */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .slideshow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Placeholder slides - ganti dengan foto asli */
+        .slide:nth-child(1) {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .slide:nth-child(2) {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        }
+
+        .slide:nth-child(3) {
+            background: linear-gradient(135deg, #1a1a1a 0%, #3d3d3d 100%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-tagline {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #f4d03f;
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #666;
+            font-weight: 300;
+        }
+
+        /* Activities Section */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .activity-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #999;
+        }
+
+        .activity-content {
+            padding: 25px;
+        }
+
+        .activity-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .activity-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Products Section */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #999;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #f4d03f;
+            margin-bottom: 15px;
+        }
+
+        .product-button {
+            display: inline-block;
+            padding: 10px 24px;
+            background: #1a1a1a;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .product-button:hover {
+            background: #2d2d2d;
+            transform: scale(1.02);
+        }
+
+        /* Soft Button */
+        .soft-button {
+            display: inline-block;
+            padding: 12px 35px;
+            background: rgba(26, 26, 26, 0.05);
+            color: #555;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(26, 26, 26, 0.1);
+        }
+
+        .soft-button:hover {
+            background: rgba(26, 26, 26, 0.08);
+            color: #1a1a1a;
+        }
+
+        .button-center {
+            text-align: center;
+        }
+
+        /* About Section */
+        .about-section {
+            background: white;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 50px 30px 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: #f4d03f;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #aaa;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #f4d03f;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #666;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 48px;
+                letter-spacing: 4px;
+            }
+
+            .hero-tagline {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .about-section {
+                padding: 30px;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo-container">
+                <div class="logo-img">B</div>
+                <div class="logo-text">BRIGADIR</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#activities">Activities</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Slideshow -->
+    <section class="hero" id="home">
+        <div class="slideshow">
+            <div class="slide active"></div>
+            <div class="slide"></div>
+            <div class="slide"></div>
+        </div>
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1 class="hero-title">BRIGADIR</h1>
+                <p class="hero-tagline">Bersama Membangun Prestasi</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section id="activities">
+        <div class="section-header">
+            <h2 class="section-title">Kegiatan Kami</h2>
+            <p class="section-subtitle">Berbagai aktivitas positif BRIGADIR</p>
+        </div>
+
+        <div class="activities-grid">
+            <div class="activity-card">
+                <div class="activity-image">📸</div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Bakti Sosial 2024</h3>
+                    <p class="activity-description">Kegiatan bakti sosial ke panti asuhan dan memberikan bantuan kepada yang membutuhkan.</p>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-image">🎯</div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Pelatihan Kepemimpinan</h3>
+                    <p class="activity-description">Workshop dan pelatihan untuk mengembangkan jiwa kepemimpinan anggota BRIGADIR.</p>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-image">🏆</div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Lomba Antar Sekolah</h3>
+                    <p class="activity-description">Partisipasi aktif dalam berbagai kompetisi dan meraih prestasi membanggakan.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-center">
+            <a href="activities.html" class="soft-button">All Activity</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" style="background: #fafafa; padding: 80px 30px; margin: 0 -100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div class="section-header">
+                <h2 class="section-title">Produk Sewa</h2>
+                <p class="section-subtitle">Layanan persewaan untuk kebutuhan acara Anda</p>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded from CSV -->
+            </div>
+
+            <div class="button-center">
+                <a href="products.html" class="soft-button">Show All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="about-section">
+            <div class="section-header">
+                <h2 class="section-title">Tentang BRIGADIR</h2>
+            </div>
+            <div class="about-content">
+                <p class="about-text">
+                    BRIGADIR adalah organisasi siswa yang berfokus pada pengembangan karakter, kepemimpinan, 
+                    dan pelayanan kepada masyarakat. Kami berkomitmen untuk membentuk generasi muda yang 
+                    bertanggung jawab, kreatif, dan peduli terhadap lingkungan sekitar.
+                </p>
+                <p class="about-text">
+                    Melalui berbagai kegiatan dan program, kami berusaha memberikan dampak positif bagi 
+                    sekolah dan masyarakat. Dengan semangat kebersamaan dan dedikasi, BRIGADIR terus 
+                    berinovasi untuk menciptakan perubahan yang bermakna.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>BRIGADIR</h3>
+                <p>Organisasi siswa yang berkomitmen untuk pengembangan karakter dan prestasi.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#activities">Activities</a>
+                <a href="#products">Products</a>
+                <a href="#about">About</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: brigadir@school.ac.id</p>
+                <p>Phone: +62 812 3456 7890</p>
+                <p>Kota Kediri, Jawa Timur</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 BRIGADIR. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 4000);
+
+        // Load products from CSV (showing only first 6)
+        async function loadProducts() {
+            try {
+                const response = await fetch('products.csv');
+                const csvData = await response.text();
+                const products = parseCSV(csvData);
+
+                const productsGrid = document.getElementById('productsGrid');
+                const displayProducts = products.slice(0, 6);
+
+                displayProducts.forEach((product) => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+
+                    const imageContent = product.image && product.image.startsWith('http') 
+                        ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">`
+                        : (product.image || '📦');
+
+                    card.innerHTML = `
+                        <div class="product-image">${imageContent}</div>
+                        <div class="product-info">
+                            <h3 class="product-name">${product.name}</h3>
+                            <div class="product-price">${formatPrice(product.price)}</div>
+                            <a href="product-detail.html?id=${product.id}" class="product-button">Detail Product</a>
+                        </div>
+                    `;
+
+                    productsGrid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const headers = lines[0].split(',');
+            const products = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+
+                const values = lines[i].split(',');
+                const product = {};
+
+                headers.forEach((header, index) => {
+                    product[header.trim()] = values[index] ? values[index].trim() : '';
+                });
+
+                products.push(product);
+            }
+
+            return products;
+        }
+
+        function formatPrice(price) {
+            return 'Rp ' + parseInt(price).toLocaleString('id-ID');
+        }
+
+        window.addEventListener('DOMContentLoaded', loadProducts);
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
