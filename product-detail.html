@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Produk - BRIGADIR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(244, 208, 63, 0.2);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4d03f;
+            font-weight: 800;
+            font-size: 24px;
+            border: 2px solid #f4d03f;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 150px 0;
+            color: #f4d03f;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 40px 30px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #1a1a1a;
+        }
+
+        /* Product Detail */
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            background: white;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .product-gallery {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .product-info-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            font-size: 13px;
+            color: #f4d03f;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .stars {
+            color: #f4d03f;
+            font-size: 18px;
+            letter-spacing: 3px;
+        }
+
+        .reviews {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .product-price {
+            font-size: 38px;
+            font-weight: 700;
+            color: #f4d03f;
+            margin-bottom: 10px;
+        }
+
+        .price-period {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .product-description {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Product Details */
+        .detail-section {
+            margin-bottom: 30px;
+        }
+
+        .detail-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .detail-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .detail-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+        }
+
+        .detail-value {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            margin-top: 20px;
+        }
+
+        .whatsapp-button:hover {
+            background: #20BA5A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-icon {
+            font-size: 24px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 30px 25px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .product-gallery {
+                position: relative;
+                top: 0;
+            }
+
+            .main-image {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-detail {
+                padding: 30px;
+            }
+
+            .product-title {
+                font-size: 28px;
+            }
+
+            .product-price {
+                font-size: 32px;
+            }
+
+            .main-image {
+                height: 280px;
+                font-size: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo-container">
+                <div class="logo-img">B</div>
+                <div class="logo-text">BRIGADIR</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index-main.html">Home</a></li>
+                <li><a href="activities.html">Activities</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="index-main.html#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Loading -->
+    <div id="loading" class="loading">Memuat detail produk...</div>
+
+    <!-- Main Content -->
+    <main id="mainContent" style="display: none;">
+        <a href="products.html" class="back-link">← Kembali ke Produk</a>
+
+        <div class="product-detail">
+            <!-- Product Gallery -->
+            <div class="product-gallery">
+                <div class="main-image" id="mainImage"></div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info-section">
+                <div class="product-category" id="productCategory"></div>
+                <h1 class="product-title" id="productTitle"></h1>
+
+                <div class="product-rating">
+                    <div class="stars" id="productStars"></div>
+                    <span class="reviews" id="productReviews"></span>
+                </div>
+
+                <div class="product-price" id="productPrice"></div>
+                <div class="price-period">per hari</div>
+
+                <p class="product-description" id="productDescription"></p>
+
+                <!-- Product Details -->
+                <div class="detail-section">
+                    <h3 class="detail-title">Detail Produk</h3>
+                    <ul class="detail-list" id="productDetails">
+                        <!-- Details will be loaded here -->
+                    </ul>
+                </div>
+
+                <!-- WhatsApp Button -->
+                <a href="#" id="whatsappButton" class="whatsapp-button">
+                    <span class="whatsapp-icon">📱</span>
+                    <span>Hubungi via WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">© 2024 BRIGADIR. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // SETTING NOMOR WHATSAPP
+        // Ganti dengan nomor WhatsApp persewaan Anda (format: 628123456789)
+        const WHATSAPP_NUMBER = '6281234567890'; // GANTI INI!
+
+        // Function to parse CSV
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const headers = lines[0].split(',');
+            const products = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+
+                const values = lines[i].split(',');
+                const product = {};
+
+                headers.forEach((header, index) => {
+                    product[header.trim()] = values[index] ? values[index].trim() : '';
+                });
+
+                products.push(product);
+            }
+
+            return products;
+        }
+
+        // Function to format price
+        function formatPrice(price) {
+            return 'Rp ' + parseInt(price).toLocaleString('id-ID');
+        }
+
+        // Function to generate stars
+        function generateStars(rating) {
+            return '★'.repeat(parseInt(rating));
+        }
+
+        // Get product ID from URL
+        function getProductId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Load product details
+        async function loadProductDetails() {
+            try {
+                const productId = getProductId();
+
+                if (!productId) {
+                    throw new Error('ID produk tidak ditemukan');
+                }
+
+                const response = await fetch('products.csv');
+                const csvData = await response.text();
+                const products = parseCSV(csvData);
+
+                const product = products.find(p => p.id === productId);
+
+                if (!product) {
+                    throw new Error('Produk tidak ditemukan');
+                }
+
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+
+                // Populate product details
+                const imageContent = product.image && product.image.startsWith('http') 
+                    ? `<img src="${product.image}" alt="${product.name}">`
+                    : (product.image || '📦');
+
+                document.getElementById('mainImage').innerHTML = imageContent;
+                document.getElementById('productCategory').textContent = product.category || 'Produk';
+                document.getElementById('productTitle').textContent = product.name;
+                document.getElementById('productStars').textContent = generateStars(product.rating || 5);
+                document.getElementById('productReviews').textContent = `(${product.reviews || 0} Reviews)`;
+                document.getElementById('productPrice').textContent = formatPrice(product.price);
+                document.getElementById('productDescription').textContent = 
+                    product.description || 'Produk berkualitas untuk kebutuhan acara Anda.';
+
+                // Product details
+                const detailsList = document.getElementById('productDetails');
+                detailsList.innerHTML = `
+                    <li class="detail-item">
+                        <span class="detail-label">Kategori</span>
+                        <span class="detail-value">${product.category || 'Umum'}</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Harga Sewa</span>
+                        <span class="detail-value">${formatPrice(product.price)}/hari</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Ketersediaan</span>
+                        <span class="detail-value">Tersedia</span>
+                    </li>
+                    <li class="detail-item">
+                        <span class="detail-label">Minimal Sewa</span>
+                        <span class="detail-value">1 Hari</span>
+                    </li>
+                `;
+
+                // WhatsApp button
+                const whatsappMessage = encodeURIComponent(
+                    `Halo, saya tertarik untuk menyewa ${product.name}. Bisakah saya mendapatkan informasi lebih lanjut?`
+                );
+                const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+                document.getElementById('whatsappButton').href = whatsappLink;
+
+                // Update page title
+                document.title = `${product.name} - BRIGADIR`;
+
+            } catch (error) {
+                console.error('Error loading product:', error);
+                document.getElementById('loading').innerHTML = 
+                    'Error memuat produk. <a href="products.html" style="color: #f4d03f;">Kembali ke daftar produk</a>';
+            }
+        }
+
+        // Load product when page loads
+        window.addEventListener('DOMContentLoaded', loadProductDetails);
+    </script>
+</body>
+</html>

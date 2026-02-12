@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk Sewa - BRIGADIR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(244, 208, 63, 0.2);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f4d03f;
+            font-weight: 800;
+            font-size: 24px;
+            border: 2px solid #f4d03f;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 40px 30px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 42px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px 0;
+            color: #f4d03f;
+            font-size: 18px;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #999;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #f4d03f;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #f4d03f;
+            margin-bottom: 15px;
+        }
+
+        .product-button {
+            display: inline-block;
+            padding: 10px 24px;
+            background: #1a1a1a;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .product-button:hover {
+            background: #2d2d2d;
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 30px 25px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .back-link {
+            color: #f4d03f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 32px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo-container">
+                <div class="logo-img">B</div>
+                <div class="logo-text">BRIGADIR</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index-main.html">Home</a></li>
+                <li><a href="activities.html">Activities</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="index-main.html#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="page-header">
+            <h1 class="page-title">Produk Sewa</h1>
+            <p class="page-subtitle">Layanan persewaan untuk berbagai kebutuhan acara Anda</p>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">Memuat produk...</div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">© 2024 BRIGADIR. All rights reserved.</p>
+            <a href="index-main.html" class="back-link">Kembali ke Halaman Utama</a>
+        </div>
+    </footer>
+
+    <script>
+        // Function to parse CSV
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const headers = lines[0].split(',');
+            const products = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+
+                const values = lines[i].split(',');
+                const product = {};
+
+                headers.forEach((header, index) => {
+                    product[header.trim()] = values[index] ? values[index].trim() : '';
+                });
+
+                products.push(product);
+            }
+
+            return products;
+        }
+
+        // Function to format price
+        function formatPrice(price) {
+            return 'Rp ' + parseInt(price).toLocaleString('id-ID');
+        }
+
+        // Load all products from CSV
+        async function loadProducts() {
+            try {
+                const response = await fetch('products.csv');
+                const csvData = await response.text();
+                const products = parseCSV(csvData);
+
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+
+                // Generate product cards
+                const productsGrid = document.getElementById('productsGrid');
+
+                products.forEach((product) => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+
+                    const imageContent = product.image && product.image.startsWith('http') 
+                        ? `<img src="${product.image}" alt="${product.name}">`
+                        : (product.image || '📦');
+
+                    card.innerHTML = `
+                        <div class="product-image">${imageContent}</div>
+                        <div class="product-info">
+                            <div class="product-category">${product.category || 'Produk'}</div>
+                            <h3 class="product-name">${product.name}</h3>
+                            <div class="product-price">${formatPrice(product.price)}/hari</div>
+                            <a href="product-detail.html?id=${product.id}" class="product-button">Detail Product</a>
+                        </div>
+                    `;
+
+                    productsGrid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading products:', error);
+                document.getElementById('loading').innerHTML = 
+                    'Error memuat produk. Pastikan file products.csv ada di folder yang sama.';
+            }
+        }
+
+        // Load products when page loads
+        window.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
+</html>
